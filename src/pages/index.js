@@ -8,6 +8,7 @@ import { TestContext } from '../context';
 import Permission from './permission';
 import FindLocation from './FindLocation';
 import Jobs from './Jobs';
+import Project from './Project';
 function HomeScreen() {
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -31,6 +32,7 @@ const Pages = () => {
                             <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
                             <Stack.Screen name="FindLocation" component={FindLocation} options={{ headerShown: false }} />
                             <Stack.Screen name="Jobs" component={Jobs} options={{ headerShown: false }} />
+                            <Stack.Screen name="Project" component={Project} />
                         </>
                         :
                         <>

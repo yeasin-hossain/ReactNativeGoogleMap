@@ -1,19 +1,36 @@
 import { useNavigation } from '@react-navigation/core';
-import React, { useContext } from 'react';
-import { Dimensions, Image, StyleSheet, Text, TextInput, TouchableOpacity, View, PermissionsAndroid } from 'react-native';
+import axios from 'axios';
+import React, { useContext, useState } from 'react';
+import { Dimensions, Image, StyleSheet, Text, TextInput, TouchableOpacity, View, PermissionsAndroid, Alert } from 'react-native';
 import { TestContext } from '../../../context';
 const width = Dimensions.get('screen').width;
 
 const Login = () => {
     const { setLoggedIn } = useContext(TestContext);
-    const navigate = useNavigation()
+    const navigate = useNavigation();
+    const [useInfo, setUserInfo] = useState({});
 
+    const apiUrl = 'https://testbackyeasin.herokuapp.com/api/user'
 
 
     const handelLogin = async () => {
-        setLoggedIn(true);
-        navigate.navigate('Permission')
+        try {
+            if (useInfo.email && useInfo.password) {
+                const signIn = await axios.post(`${apiUrl}/login`, useInfo);
+                console.log(signIn)
+                if (signIn.data?.code === 200) {
+                    setLoggedIn(true);
+                    navigate.navigate('Permission');
+                } else {
+                    alert(signIn.data?.message)
+                }
+            } else {
+                alert('Please Enter Email And PassWord')
+            }
 
+        } catch (error) {
+            console.log(error)
+        }
         // try {
         //     const granted = await PermissionsAndroid.request(
         //         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
@@ -43,11 +60,17 @@ const Login = () => {
             </View>
             <View>
                 <View style={{ position: 'relative', marginBottom: 15 }}>
-                    <TextInput placeholder='Your Name' style={styles.input} />
+                    <TextInput
+                        onChangeText={text => setUserInfo(p => ({ ...p, email: text }))}
+                        placeholder='Email'
+                        style={styles.input} />
                     <Image style={styles.inputIcon} source={require('../../../static/auth/man.png')} />
                 </View>
                 <View style={{ position: 'relative' }}>
-                    <TextInput placeholder='Your Email' style={styles.input} />
+                    <TextInput
+                        onChangeText={text => setUserInfo(p => ({ ...p, password: text }))}
+                        placeholder='Password'
+                        style={styles.input} />
                     <Image style={styles.inputIcon} source={require('../../../static/auth/email.png')} />
                 </View>
                 <TouchableOpacity
@@ -57,14 +80,12 @@ const Login = () => {
                 </TouchableOpacity>
             </View>
 
-
-
-
             <View style={{ borderTopColor: "#000", borderTopWidth: 1, paddingBottom: 30 }}>
                 <Text style={{ textAlign: 'center', marginTop: 20 }}>
                     Don’t  have an account?
                 </Text>
                 <TouchableOpacity
+                    onPress={() => navigate.navigate("Register")}
                     style={{ ...styles.input, ...styles.btn, backgroundColor: '#000', }}>
                     <Text style={{ color: '#fff', textAlign: 'center' }}>Create Account</Text>
                 </TouchableOpacity>

@@ -3,17 +3,19 @@ import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Marker } from 'react-native-maps'
 import Filter from './Filter'
 import Map from '../Map'
+import { useNavigation } from '@react-navigation/core'
 
 const Jobs = () => {
     const [location, setLocation] = useState({});
     const [modalVisible, setModalVisible] = useState(false);
+    const navigation = useNavigation()
     return (
         <View style={{ position: 'relative' }}>
 
             <View style={{ height: '90%' }}>
                 <Map state={setLocation}>
                     <Marker
-                        onPress={() => console.log('object')}
+                        onPress={() => navigation.navigate('Project')}
                         draggable
                         coordinate={{ latitude: location?.lat, longitude: location?.lang }}
                         image={require('../../static/map/marker.png')}
