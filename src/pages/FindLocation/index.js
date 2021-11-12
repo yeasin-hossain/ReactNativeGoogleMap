@@ -1,9 +1,12 @@
+import { useNavigation } from '@react-navigation/core';
 import React from 'react'
 import { Dimensions, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import Map from '../Map'
 const width = Dimensions.get('screen').width;
 
 const FindLocation = () => {
+    const navigation = useNavigation();
+
     return (
         <View style={styles.container}>
             <View style={{ height: '70%' }}>
@@ -17,6 +20,7 @@ const FindLocation = () => {
                     <Image style={styles.inputIcon} source={require('../../static/map/pin.png')} />
                 </View>
                 <TouchableOpacity
+                    onPress={() => navigation.navigate('Jobs')}
                     style={{ ...styles.input, ...styles.btn, backgroundColor: '#000', }}>
                     <Text style={{ color: '#fff', textAlign: 'center', fontWeight: 'bold' }}>Find Your Job</Text>
                 </TouchableOpacity>

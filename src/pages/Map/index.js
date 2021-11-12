@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 
-const Map = () => {
+const Map = ({ children, state }) => {
     const [location, setLocation] = useState(false);
 
     useEffect(() => {
@@ -14,6 +14,12 @@ const Map = () => {
                     lat: initialPosition.coords.latitude,
                     lang: initialPosition.coords.longitude
                 });
+                if (state) {
+                    state({
+                        lat: initialPosition.coords.latitude,
+                        lang: initialPosition.coords.longitude
+                    });
+                }
                 console.log(position)
 
             },
@@ -36,13 +42,15 @@ const Map = () => {
                         longitudeDelta: 0.0121,
                     }}
                 >
-                    <Marker
+                    {/* <Marker
+                        onPress={() => console.log('object')}
                         draggable
                         coordinate={{ latitude: location?.lat, longitude: location?.lang }}
                         image={require('../../static/map/marker.png')}
                         title='Job 2'
-                    />
-                    <Marker
+                    /> */}
+                    {children}
+                    {/* <Marker
                         draggable
                         coordinate={{ latitude: location?.lat, longitude: location?.lang }}
                         image={require('../../static/map/marker.png')}
@@ -53,7 +61,7 @@ const Map = () => {
                         coordinate={{ latitude: location?.lat, longitude: location?.lang }}
                         image={require('../../static/map/marker.png')}
                         title='Job 4'
-                    />
+                    /> */}
                     {/* <Circle
                         radius={2}
                         coordinate={{ latitude: location?.lat, longitude: location?.lang }}
