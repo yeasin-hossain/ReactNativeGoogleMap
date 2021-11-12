@@ -2,7 +2,8 @@ import { useNavigation } from '@react-navigation/core';
 import React, { useContext } from 'react';
 import { Dimensions, Image, StyleSheet, Text, TextInput, TouchableOpacity, View, PermissionsAndroid } from 'react-native';
 import { TestContext } from '../../../context';
-const width = Dimensions.get('screen').width
+const width = Dimensions.get('screen').width;
+
 const Login = () => {
     const { setLoggedIn } = useContext(TestContext);
     const navigate = useNavigation()

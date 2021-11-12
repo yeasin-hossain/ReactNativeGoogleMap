@@ -69,7 +69,7 @@ export default Map
 const styles = StyleSheet.create({
     container: {
         ...StyleSheet.absoluteFillObject,
-        height: '100%',
+        // height: '80%',
         width: '100%',
         justifyContent: 'flex-end',
         alignItems: 'center',
